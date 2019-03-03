@@ -1,0 +1,1083 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="vue中数据交互和传参方式, 张雨凡">
+    <meta name="description" content="
+一、介绍通过vue-music-app项目，初步熟悉vue中的数据交互和传参方式，此项目中使用到了vuex，vue-router，props，solt传参方式进行页面传参，以及如何设置代理服务器对访问的ip地址进行管理，并且使用到了van">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>vue中数据交互和传参方式 | 张雨凡</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+</head>
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="container">
+            <div class="nav-wrapper">
+                <div class="brand-logo">
+                    <a href="/" class="waves-effect waves-light">
+                        
+                        <img src="/medias/logo.png" class="logo-img hide-on-small-only">
+                        
+                        <span class="logo-span">张雨凡</span>
+                    </a>
+                </div>
+                
+
+<a href="#" data-activates="mobile-nav" class="button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a id="toggleSearch" class="waves-effect waves-light">
+            <i id="searchIcon" class="mdi-action-search"></i>
+        </a>
+    </li>
+
+</ul>
+
+<div class="side-nav" id="mobile-nav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">张雨凡</div>
+        <div class="logo-desc">
+            
+            欢迎来到我的博客
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/ynzy/ynzy.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+
+    <div class="social-link"><a href="https://github.com/ynzy" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="a758922095@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+<a href="#!" class="tooltipped" data-tooltip="QQ联系我: 758922096" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/ynzy/ynzy.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank" data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewbox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/>
+    </svg>
+</a>
+        
+    </nav>
+</header>
+
+
+
+
+
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        vue中数据交互和传参方式
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="container content">
+
+    
+    <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            
+            <div class="article-tag">
+                
+                <a href="/tags/Vue-cli/" target="_blank">
+                    <span class="chip bg-color">Vue-cli</span>
+                </a>
+                
+            </div>
+            
+            <div class="post-info">
+                
+                <span class="post-cate">
+                <!--<span class="post-cate" style="margin-right: 0px">-->
+                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                    
+                    <a href="/categories/脚手架/" class="post-category" target="_blank">
+                        脚手架
+                    </a>
+                    
+                </span>
+                
+
+                <span class="post-date">
+                    <i class="fa fa-clock-o fa-fw"></i>2019-03-03
+                </span>
+				
+				
+                    <span id="busuanzi_container_page_pv" class="post-read">
+                    <i class="fa fa-eye fa-fw"></i>阅读 <span id="busuanzi_value_page_pv"></span>
+				
+            </span></div>
+        </div>
+        <hr>
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <!-- # vue中数据交互和传参方式 -->
+<h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><p>通过vue-music-app项目，初步熟悉vue中的数据交互和传参方式，此项目中使用到了<br>vuex，vue-router，props，solt传参方式进行页面传参，以及如何设置代理服务器对访问的ip地址进行管理<br>，并且使用到了vant按需引入轮播图组件。</p>
+<p><a href="https://github.com/ynzy/vue-project/tree/master/vue-music-app" target="_blank" rel="noopener">源码地址</a></p>
+<h2 id="二、传参方式"><a href="#二、传参方式" class="headerlink" title="二、传参方式"></a>二、传参方式</h2><h3 id="1、插槽分发内容"><a href="#1、插槽分发内容" class="headerlink" title="1、插槽分发内容"></a>1、插槽分发内容</h3><ul>
+<li>定义一个组件，在组件内写入<code>&lt;slot&gt;&lt;/slot&gt;</code>标签，当调用组件时，组件中如果有内容，则会替换slot标签渲染数据。</li>
+<li><p>新建一个slider组件：</p>
+<pre><code>&lt;template&gt;
+&lt;!-- TODO:vue通过ref设置dom元素，通过$refs方法获取此dom节点 --&gt;
+&lt;div class=&quot;slider&quot; ref=&quot;slider&quot;&gt;
+  &lt;div class=&quot;sliderGroup&quot; ref=&quot;sliderGroup&quot;&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/template&gt;
+</code></pre></li>
+<li><p>新建一个recommend.vue组件，调用slider组件</p>
+<pre><code>&lt;template&gt;
+  &lt;div class=&quot;recommend&quot;&gt;
+    &lt;h2 class=&quot;recommendlist&quot;&gt;推荐歌单&lt;/h2&gt;
+    &lt;slider&gt;
+      &lt;!-- TODO:使用插槽,通过组件的slot标签，替换数据 --&gt;
+      &lt;div v-for=&quot;item in slider&quot; :key=&quot;item.id&quot;&gt;
+        {{ item.songName }}
+      &lt;/div&gt;
+    &lt;/slider&gt;
+&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import slider from &quot;./slider.vue&quot;;
+export default {
+  data() {
+    return { 
+      slider: []
+    };
+  },
+  components: {  //调用slider组件
+    slider
+  },
+  methods: {
+      getSlider() {  //获取数据存储在slider数组中
+        this.$axios.get(&quot;http://www.wanandroid.com/tools/mockapi/9664/songlist&quot;).then(resp =&gt; {
+          if (resp.status == 200) {
+            this.slider = resp.data;
+          }
+        });
+      },
+  }
+&lt;/script&gt;
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/13505073-e3539c75d7ee9299.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="页面效果.png"></p>
+</li>
+</ul>
+<h3 id="2、通过props进行父子组件传参"><a href="#2、通过props进行父子组件传参" class="headerlink" title="2、通过props进行父子组件传参"></a>2、通过props进行父子组件传参</h3><ul>
+<li><p>有些时候，我们定义一个组件，在多个地方调用，而所需展示的数据不同，可以通过props传参方式对组件进行页面渲染</p>
+</li>
+<li><p>新建一个Songlist.vue组件</p>
+</li>
+</ul>
+<pre><code>&lt;!-- 不同数据调用此模板 --&gt;
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+      &lt;li class=&quot;songli&quot; v-for=&quot;item in songList&quot; @click=&quot;selectSong(item)&quot;&gt;
+        &lt;div class=&quot;songinfor&quot;&gt;
+          &lt;p class=&quot;title&quot;&gt;{{item.songName}}&lt;/p&gt;
+          &lt;p class=&quot;singer&quot; style=&quot;font-size:12px;color:#888&quot;&gt;{{item.singer}}&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;p class=&quot;start&quot;&gt;
+          &lt;img src=&quot;../../static/img/start.png&quot;&gt;
+        &lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+    props: [&quot;songList&quot;],  //通过props接收父组件传送的数据
+};
+&lt;/script&gt;
+</code></pre><ul>
+<li>新建一个recommend.vue,调用子组件SongList</li>
+</ul>
+<pre><code>&lt;template&gt;
+  &lt;div class=&quot;recommend&quot;&gt;
+      &lt;!-- TODO:动态绑定数据songList数据，子组件通过props接收数据 --&gt;
+    &lt;songList :song-list=&quot;songList&quot;&gt;&lt;/songList&gt;  
+
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import songList from &quot;./Songlist.vue&quot;
+export default {
+  data() {
+    return { 
+      songList: []
+    };
+  },
+  components: {
+    songList,
+  },
+  methods: {
+    getSongList() {
+      this.$axios.get(&quot;http://www.wanandroid.com/tools/mockapi/9664/recommend&quot;).then(resp =&gt; {
+        if (resp.status == 200) {
+          this.songList = resp.data;
+        }
+      });
+    }
+  }
+};
+&lt;/script&gt;
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/13505073-a447d0175d80d847.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="页面效果.png"></p>
+<ul>
+<li>新建一个Hot.vue组件，也调用子组件Songlist</li>
+</ul>
+<pre><code>&lt;template&gt;
+  &lt;div id=&quot;hot&quot;&gt;    
+        &lt;div class=&quot;banner&quot;&gt;
+            热门歌曲
+        &lt;/div&gt;
+        &lt;!-- 动态绑定数据hotList数据 --&gt;
+        &lt;songList :song-list=&quot;hotList&quot;&gt;&lt;/songList&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import songList from &quot;./Songlist.vue&quot;
+    export default {
+                data() {
+            return {hotList: []}
+        },
+        methods: {
+            getHotList() {
+                 this.$axios.get(&quot;http://www.wanandroid.com/tools/mockapi/9664/recommend&quot;).then(resp =&gt; {
+
+                    if (resp.status == 200) {
+                        this.hotList = resp.data;
+                    }
+                });
+            }
+        },
+        mounted() {
+            this.getHotList()
+        },
+        components: {
+            songList
+        }
+    }
+&lt;/script&gt;
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/13505073-b754df0159ac607c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="页面效果.png"></p>
+<h3 id="3、使用vue-router进行页面传参"><a href="#3、使用vue-router进行页面传参" class="headerlink" title="3、使用vue-router进行页面传参"></a>3、使用vue-router进行页面传参</h3><ul>
+<li>点击某个菜单项，跳转到另一个组件页面时可以使用vue-router进行传参</li>
+<li>对路由进行配置<br><img src="https://upload-images.jianshu.io/upload_images/13505073-63cd4d2cd00d4d86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由配置.png"></li>
+<li>在songList组件添加点击事件跳转查看详情页</li>
+</ul>
+<pre><code>&lt;!-- 不同数据调用此模板 --&gt;
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+      &lt;li class=&quot;songli&quot; v-for=&quot;item in songList&quot; @click=&quot;selectSong(item)&quot;&gt;
+        &lt;div class=&quot;songinfor&quot;&gt;
+          &lt;p class=&quot;title&quot;&gt;{{item.songName}}&lt;/p&gt;
+          &lt;p class=&quot;singer&quot; style=&quot;font-size:12px;color:#888&quot;&gt;{{item.singer}}&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;p class=&quot;start&quot;&gt;
+          &lt;img src=&quot;../../static/img/start.png&quot;&gt;
+        &lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+    props: [&quot;songList&quot;],
+    methods: {
+        selectSong(item) {
+            // 直接调用$router.push,实现携带参数的跳转
+            // this.$router.push({
+            //     &quot;name&quot; : &quot;Detail&quot;,  //发送跳转页面名字
+            //     &quot;params&quot; : {item,item} //TODO: 通过路由的params进行传参
+            // })
+            this.$router.push({
+                &quot;path&quot;: &quot;/detail/:item&quot;,
+                &quot;query&quot;: {item: JSON.stringify(item)}  //TODO: 通过路由的query进行传参
+            })
+        },
+    }
+};
+&lt;/script&gt;
+</code></pre><ul>
+<li>新建detail.vue组件，接收页面传参</li>
+</ul>
+<pre><code>&lt;template&gt;
+    &lt;transition name=&quot;slider&quot;&gt;
+        &lt;div class=&quot;detail&quot;&gt;
+                &lt;div class=&quot;songimg&quot;&gt;
+                    &lt;img :src=&quot;songDetail.songImgSrc&quot;&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;songtitle&quot;&gt;
+                    {{songDetail.songName}}
+                &lt;/div&gt;
+                &lt;div class=&quot;songaudio&quot;&gt;
+                    &lt;audio autoplay=&quot;autoplay&quot;&gt;
+                        &lt;source src=&quot;static/song/song.ogg&quot; type=&quot;audio/ogg&quot; /&gt;
+                        &lt;source src=&quot;static/song/song.mp3&quot; type=&quot;audio/mpeg&quot; /&gt;
+                    &lt;/audio&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+    &lt;/transition&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    export default {
+        data() {
+            return {
+                songDetail: {}
+            }
+        },
+        mounted () {
+            //TODO:parmas传参不可以刷新，会丢失数据，query可以刷新页面
+            // console.log(this.$route.params) //$route接收传递的参数
+            // this.songDetail = this.$route.params.item  //TODO: params接收路由传递的参数
+            this.songDetail = JSON.parse(this.$route.query.item); //TODO: query接收路由传递的参数
+        },
+    }
+&lt;/script&gt;
+</code></pre><h3 id="4、使用vuex进行数据管理"><a href="#4、使用vuex进行数据管理" class="headerlink" title="4、使用vuex进行数据管理"></a>4、使用vuex进行数据管理</h3><ul>
+<li>使用vuex可以更好的管理数据状态，使数据得到共享</li>
+<li>安装vuex <code>npm install vuex --save</code></li>
+<li>新建store文件夹，同一组织store文件<br><img src="https://upload-images.jianshu.io/upload_images/13505073-b8ff747ee5b2c8b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="store文件结构.png"><h5 id="1-在main-js引入store"><a href="#1-在main-js引入store" class="headerlink" title="(1) 在main.js引入store"></a>(1) 在main.js引入store</h5></li>
+</ul>
+<pre><code>import Vue from &#39;vue&#39;
+import App from &#39;./App&#39;
+import router from &#39;./router&#39;
+import axios from &#39;axios&#39;
+import store from &#39;./store/index&#39;  //导入store主文件index
+
+Vue.prototype.$axios = axios  //将axios添加到vue的原型上，所有vue实例上都可以使用axios
+
+Vue.config.productionTip = false
+
+new Vue({
+  el: &#39;#app&#39;,
+  store,  //添加在vue实例上
+  router,
+  components: { App },
+  template: &#39;&lt;App/&gt;&#39;
+})
+</code></pre><h5 id="2-编写store文件夹"><a href="#2-编写store文件夹" class="headerlink" title="(2) 编写store文件夹"></a>(2) 编写store文件夹</h5><ul>
+<li><p>index.js</p>
+<pre><code>import Vue from &#39;vue&#39;
+import Vuex from &#39;vuex&#39;
+import getters from &#39;./getters&#39;
+import state from &#39;./state&#39;
+import mutations from &#39;./mutations&#39;
+import actions from &#39;./action&#39;
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  getters,
+  state,
+  mutations,
+  actions
+})
+</code></pre></li>
+<li>state.js  //数据管理<pre><code>const state = {
+  song: {}
+}
+export default {
+  state
+}
+</code></pre></li>
+<li>getters.js  //管理数据状态，相当于computed(计算)属性<pre><code>const getters={
+getSong(state){
+  return state.song;
+}
+}
+export default getters;
+</code></pre></li>
+<li><p>actions.js  //提交数据变化，一把用于异步获取数据，相当于methods(方法)属性</p>
+<pre><code>import types from &#39;./types.js&#39;
+import axios from &#39;axios&#39;
+
+const actions = {
+getSongAsync({commit,state}) {
+  axios.get(&quot;/recommend/&quot;).then(resp =&gt; {
+    if (resp.status == 200) {
+      commit(types.GET_SONG, resp.data);  //提交突变
+    }
+  });
+}
+}
+
+export default actions;
+</code></pre></li>
+<li><p>mutations.js //改变数据状态，也就相当于对state数据进行更新</p>
+<pre><code>import types from &#39;./types&#39;
+
+const mutations = {
+  [types.GET_SONG](state,data) {
+      state.song = data
+      console.log(data)
+  }
+}
+export default mutations
+</code></pre></li>
+<li><p>types.js  //定义方法名常量，管理方法名</p>
+<pre><code>const GET_SONG = &quot;GET_SONG&quot;  
+export default {
+  GET_SONG
+}
+</code></pre></li>
+</ul>
+<h5 id="3-在detail-vue组件调用state中的数据"><a href="#3-在detail-vue组件调用state中的数据" class="headerlink" title="(3) 在detail.vue组件调用state中的数据"></a>(3) 在detail.vue组件调用state中的数据</h5><pre><code>&lt;script&gt;
+import { mapGetters, mapActions } from &quot;vuex&quot;;
+export default {
+  computed: {
+    ...mapGetters([&quot;getSong&quot;])  //此数据可以直接在页面模板调用
+  },
+  created() {
+    this.$store.dispatch(&quot;getSongAsync&quot;);  //页面初始化时发送事件
+  }
+};
+&lt;/script&gt;
+</code></pre><h2 id="三、引入Vant"><a href="#三、引入Vant" class="headerlink" title="三、引入Vant"></a>三、引入Vant</h2><h3 id="Vant按需引入组件"><a href="#Vant按需引入组件" class="headerlink" title="Vant按需引入组件"></a>Vant按需引入组件</h3><p><a href="https://youzan.github.io/vant/#/zh-CN/intro" target="_blank" rel="noopener">官方网址</a></p>
+<h5 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h5><p><code>npm i vant -S</code></p>
+<ul>
+<li>babel-plugin-import 是一款 babel 插件，它会在编译过程中将 import 的写法自动转换为按需引入的方式</li>
+</ul>
+<pre><code># 安装 babel-plugin-import 插件
+npm i babel-plugin-import -D
+</code></pre><pre><code>// .babelrc 中配置
+// 注意：webpack 1 无需设置 libraryDirectory
+{
+  &quot;plugins&quot;: [
+    [&quot;import&quot;, {
+      &quot;libraryName&quot;: &quot;vant&quot;,
+      &quot;libraryDirectory&quot;: &quot;es&quot;,
+      &quot;style&quot;: true
+    }]
+  ]
+}
+</code></pre><blockquote>
+<p>!注意：配置 babel-plugin-import 插件后将不允许导入所有组件</p>
+</blockquote>
+<h5 id="2、新建–src-vant-components-js按需使用swiper组件"><a href="#2、新建–src-vant-components-js按需使用swiper组件" class="headerlink" title="2、新建–src/vant-components.js按需使用swiper组件"></a>2、新建–src/vant-components.js按需使用swiper组件</h5><pre><code>import Vue from &#39;vue&#39;
+
+import { Swipe, SwipeItem } from &#39;vant&#39;;
+
+Vue.use(Swipe).use(SwipeItem);
+</code></pre><h5 id="3、在main引入vant-components-js即可在所有页面使用引入的组件"><a href="#3、在main引入vant-components-js即可在所有页面使用引入的组件" class="headerlink" title="3、在main引入vant-components.js即可在所有页面使用引入的组件"></a>3、在main引入vant-components.js即可在所有页面使用引入的组件</h5><p><img src="https://upload-images.jianshu.io/upload_images/13505073-6696122287b34157.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="引入组件.png"></p>
+<h5 id="4、此时就可以在vue组件中使用vant的swipe组件了"><a href="#4、此时就可以在vue组件中使用vant的swipe组件了" class="headerlink" title="4、此时就可以在vue组件中使用vant的swipe组件了"></a>4、此时就可以在vue组件中使用vant的swipe组件了</h5><p><img src="https://upload-images.jianshu.io/upload_images/13505073-132545809587e068.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="使用组件.png"></p>
+<h2 id="四、配置代理服务器"><a href="#四、配置代理服务器" class="headerlink" title="四、配置代理服务器"></a>四、配置代理服务器</h2><h3 id="编译打包前要做的事"><a href="#编译打包前要做的事" class="headerlink" title="编译打包前要做的事"></a>编译打包前要做的事</h3><h5 id="1、修改文件–config-index-js"><a href="#1、修改文件–config-index-js" class="headerlink" title="1、修改文件–config/index.js"></a>1、修改文件–config/index.js</h5><ul>
+<li>找到build中<code>assetsPublicPath</code>选项进行修改<br><img src="https://upload-images.jianshu.io/upload_images/13505073-c6c836fa4a06e0e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="修改assetsPublicPath选项.png"><h5 id="2、修改文件–config-index-js，进行代理服务器配置"><a href="#2、修改文件–config-index-js，进行代理服务器配置" class="headerlink" title="2、修改文件–config/index.js，进行代理服务器配置"></a>2、修改文件–config/index.js，进行代理服务器配置</h5></li>
+<li>找到dev中的<code>proxyTable</code>进行代理服务器配置，统一管理接口</li>
+</ul>
+<pre><code>proxyTable: {
+  &#39;/song&#39;: {  //匹配项,放在项目调用中
+    target: &#39;http://www.wanandroid.com/tools/mockapi/9664/songlist&#39;, // 接口域名
+    // secure: false,  // 如果是https接口，需要配置这个参数
+    changeOrigin: true, //是否跨域
+    pathRewrite: { //重写地址
+      &#39;^/song&#39;: &#39;&#39; //因为接口中没有这个匹配项，所以要重写地址，才能正常访问
+    }
+  },
+}
+</code></pre><h5 id="3、修改文件–build-utils-js"><a href="#3、修改文件–build-utils-js" class="headerlink" title="3、修改文件–build/utils.js"></a>3、修改文件–build/utils.js</h5><ul>
+<li>找到<code>ExtractTextPlugin.extract</code>，添加<code>publicPath</code>选项</li>
+</ul>
+<pre><code>if (options.extract) {
+    return ExtractTextPlugin.extract({
+      publicPath: &#39;../../&#39;,  //TODO:css中用到资源时需要加的属性
+      use: loaders,
+      fallback: &#39;vue-style-loader&#39;
+    })
+  } else {
+    return [&#39;vue-style-loader&#39;].concat(loaders)
+  }
+</code></pre>
+            </div>
+            <hr>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff;
+        background-color: #22AB38;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff;
+        background-color: #019FE8;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a class="reward-link btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs">
+                        <li class="tab wechat-tab waves-effect waves-light"><a class="active" href="#wechat">微信</a></li>
+                        <li class="tab alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                    </ul>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#reward .reward-link').on('click', function () {
+            $('#rewardModal').openModal();
+        });
+
+        $('#rewardModal .close').on('click', function () {
+            $('#rewardModal').closeModal();
+        });
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            <div class="reprint">
+                <p>
+                    <span class="reprint-tip">转载请注明: </span>
+                    <a href="https://ynzy.github.io" class="b-link-green">张雨凡</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/2019/03/03/vue中数据交互和传参方式/" class="b-link-green">vue中数据交互和传参方式</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">本篇</div>
+            <div class="card">
+                <a href="/2019/03/03/vue中数据交互和传参方式/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="vue中数据交互和传参方式">
+                        
+                        <span class="card-title">vue中数据交互和传参方式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">
+一、介绍通过vue-music-app项目，初步熟悉vue中的数据交互和传参方式，此项目中使用到了vuex，vue-router，props，solt传参方式进行页面传参，以及如何设置代理服务器对访问的ip地址进行管理，并且使用到了van</div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-03
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/脚手架/" class="post-category" target="_blank">
+                                    脚手架
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Vue-cli/" target="_blank">
+                        <span class="chip bg-color">Vue-cli</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">下一篇</div>
+            <div class="card">
+                <a href="/2019/02/28/vue-cli3项目创建-配置-发布/">
+                    <div class="card-image">
+                        
+                        <img src="http://pl7h7g4ko.bkt.clouddn.com/18760162_p0.jpg" class="responsive-img" alt="vue-cli3 项目创建-配置-发布">
+                        
+                        <span class="card-title">vue-cli3 项目创建-配置-发布</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">一、使用的技术
+vue-cli3vuexaxios采用的数据接口，easy-mock
+
+二、初始化项目
+首先需要安装vue-cli3,官方教程
+初始化安装，并成功启动,
+初始化项目默认安装routervue init webpack ita</div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-02-28
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/脚手架/" class="post-category" target="_blank">
+                                    脚手架
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Vue-cli/" target="_blank">
+                        <span class="chip bg-color">Vue-cli</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 张雨凡<br />'
+            + '作者: 张勇<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://blinkfox.github.io/" target="_blank">Blinkfox</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
+
+            
+			
+                <br>
+                <span id="busuanzi_container_site_pv">
+                    本站总访问量 <span id="busuanzi_value_site_pv" style="color: #fff;"></span> 次,&nbsp;
+                </span>
+				<span id="busuanzi_container_site_uv">
+                    访客数 <span id="busuanzi_value_site_uv" style="color: #fff;"></span> 人.
+                </span>
+			
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis"><a href="https://github.com/ynzy" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="a758922095@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+<a href="#!" class="tooltipped" data-tooltip="QQ联系我: 758922096" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title">搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input" autofocus>
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/js/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
