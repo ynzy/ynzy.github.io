@@ -605,62 +605,130 @@ export default {
   color: #000;
 }
 &lt;/style&gt;
-</code></pre><h2 id="六、使用vuex管理数据"><a href="#六、使用vuex管理数据" class="headerlink" title="六、使用vuex管理数据"></a>六、使用vuex管理数据</h2><ul>
+</code></pre><h2 id="七、使用vuex管理数据"><a href="#七、使用vuex管理数据" class="headerlink" title="七、使用vuex管理数据"></a>七、使用vuex管理数据</h2><ul>
 <li>创建store.js对商品列表的分页数据进行管理</li>
-<li><code>`</code><br>import Vue from ‘vue’<br>import Vuex from ‘vuex’</li>
 </ul>
-<p>Vue.use(Vuex);</p>
-<p>var state = {<br>  shop: {<br>    num: 1,<br>    list: [],<br>    page: 0<br>  }<br>}</p>
-<p>const mutations = {<br>  setshoplist(state, data) {  //设置商品列表数据<br>    state.shop.list = state.shop.list.concat(data)  //拼接数组<br>  },<br>  nextpage(state){  //下一页<br>    state.shop.page++;<br>  }<br>}</p>
-<p>export default new Vuex.Store({<br>  state,<br>  mutations<br>})</p>
-<pre><code>
-* 在HomeShop.vue页面使用vuex接收数据
+<pre><code>import Vue from &#39;vue&#39;
+import Vuex from &#39;vuex&#39;
 
-</code></pre><p><script><br>import { mapState } from “vuex”;  //引入vuex数据mapState辅助函数<br>import { getShopList } from “@/api/shop”;  //引入获取商品列表分页数据的方法</p>
-<p>export default {<br>  data() {<br>    return {<br>      // list: [],<br>      loading: false,<br>      finished: false<br>      // page: 0<br>    };<br>  },<br>  computed: {<br>    …mapState({<br>      list: state =&gt; state.shop.list,  //获取vuex中的list数据<br>      page: state =&gt; state.shop.page   //获取vuex中的分页数据<br>    })<br>  },<br>  mounted() {},<br>  methods: {<br>    onLoad() {<br>      //每次加载刷新，页数加1<br>      this.$store.commit(“nextpage”);  //提交页数突变的方法</p>
-<pre><code>  // 数据全部加载完成
-  setTimeout(() =&gt; {
-    getShopList(this.page)
-      .then(res =&gt; {
-        if (res.data.success) {
-          this.$store.commit(&quot;setshoplist&quot;, res.data.shop);  //提交商品数据突变方法
-          // 加载状态结束
-          this.loading = false;
-        }
-      })
-      .catch(function(err) {
-        alert(&quot;接口错误：&quot; + err);
-      });
-  }, 2000);
-  //如果获取数据长度超过了70,则不再获取数据
-  if (this.list.length &gt;= 70) {
-    this.finished = true;
+Vue.use(Vuex);
+
+var state = {
+  shop: {
+    num: 1,
+    list: [],
+    page: 0
   }
 }
-</code></pre><p>  }<br>};<br></script></p>
-<pre><code>
-## 七、制作svg图标，引入自定义图标
 
-1. 使用Ai制作svg图标，保存为svg格式
-2. 进入[制作字体图标官网](https://icomoon.io/)
-3. ![导入svg图标](https://upload-images.jianshu.io/upload_images/13505073-9ef52fe4d4c425fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![导入svg图标](https://upload-images.jianshu.io/upload_images/13505073-3fad0e483ac4358d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-4. 也可以选择观望已有的图标，选择之后下方有显示，
-![](https://upload-images.jianshu.io/upload_images/13505073-dd2da770c8da4987.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-5. 点击下方*Generate Font F*按钮对选择的图标进行设置，然后下载
-![点击preferences进行个性化设置](https://upload-images.jianshu.io/upload_images/13505073-74c8a897cca4700d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-6. 得到解压包以后，把解压的文件放在`assets`文件夹中，此文件夹会被打包编译，
-7. 解决样式冲突问题：
-  * 由于项目引入了其他ui框架，本身有字体图标，会与自定义图标冲突，需要解决
-  * 编写--style.scss文件
+const mutations = {
+  setshoplist(state, data) {  //设置商品列表数据
+    state.shop.list = state.shop.list.concat(data)  //拼接数组
+  },
+  nextpage(state){  //下一页
+    state.shop.page++;
+  }
+}
 
-</code></pre><p>//TODO: 解决字体图标库与框架的字体图标库的冲突问题<br>//以”icon-mt-“打头，包含” icon-mt-“的，css3选择器<br>i[class^=”icon-mt-“],i[class*=” icon-mt-“] {<br>  font-family: ‘#{$icomoon-font-family}’ !important;<br>  speak: none;<br>  font-style: normal;<br>  font-weight: normal;<br>  font-variant: normal;<br>  text-transform: none;<br>  line-height: 1;</p>
-<p>  /<em> Better Font Rendering =========== </em>/<br>  -webkit-font-smoothing: antialiased;<br>  -moz-osx-font-smoothing: grayscale;<br>}</p>
-<pre><code>
-8. 如果想添加样式直接在--style.scss文件添加
+export default new Vuex.Store({
+  state,
+  mutations
+})
+</code></pre><ul>
+<li>在HomeShop.vue页面使用vuex接收数据</li>
+</ul>
+<pre><code>&lt;script&gt; 
+import { mapState } from &quot;vuex&quot;;  //引入vuex数据mapState辅助函数
+import { getShopList } from &quot;@/api/shop&quot;;  //引入获取商品列表分页数据的方法
 
-</code></pre><p>.icon-mt-hezuo {<br>  &amp;:before {<br>    content: $icon-mt-hezuo;<br>    color: $icon-mt-color;<br>  }<br>}<br>//默认没有状态样式，自定义添加<br>.icon-mt-hezuo:active {<br>  &amp;:before {<br>    content: $icon-mt-hezuo;<br>    color: red;<br>  }<br>}<br><code>`</code></p>
+export default {
+  data() {
+    return {
+      // list: [],
+      loading: false,
+      finished: false
+      // page: 0
+    };
+  },
+  computed: {
+    ...mapState({
+      list: state =&gt; state.shop.list,  //获取vuex中的list数据
+      page: state =&gt; state.shop.page   //获取vuex中的分页数据
+    })
+  },
+  mounted() {},
+  methods: {
+    onLoad() {
+      //每次加载刷新，页数加1
+      this.$store.commit(&quot;nextpage&quot;);  //提交页数突变的方法
 
+      // 数据全部加载完成
+      setTimeout(() =&gt; {
+        getShopList(this.page)
+          .then(res =&gt; {
+            if (res.data.success) {
+              this.$store.commit(&quot;setshoplist&quot;, res.data.shop);  //提交商品数据突变方法
+              // 加载状态结束
+              this.loading = false;
+            }
+          })
+          .catch(function(err) {
+            alert(&quot;接口错误：&quot; + err);
+          });
+      }, 2000);
+      //如果获取数据长度超过了70,则不再获取数据
+      if (this.list.length &gt;= 70) {
+        this.finished = true;
+      }
+    }
+  }
+};
+&lt;/script&gt;
+</code></pre><h2 id="八、制作svg图标，引入自定义图标"><a href="#八、制作svg图标，引入自定义图标" class="headerlink" title="八、制作svg图标，引入自定义图标"></a>八、制作svg图标，引入自定义图标</h2><ol>
+<li>使用Ai制作svg图标，保存为svg格式</li>
+<li>进入<a href="https://icomoon.io/" target="_blank" rel="noopener">制作字体图标官网</a></li>
+<li><img src="https://upload-images.jianshu.io/upload_images/13505073-9ef52fe4d4c425fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="导入svg图标"><br><img src="https://upload-images.jianshu.io/upload_images/13505073-3fad0e483ac4358d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="导入svg图标"></li>
+<li>也可以选择观望已有的图标，选择之后下方有显示，<br><img src="https://upload-images.jianshu.io/upload_images/13505073-dd2da770c8da4987.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>点击下方<em>Generate Font F</em>按钮对选择的图标进行设置，然后下载<br><img src="https://upload-images.jianshu.io/upload_images/13505073-74c8a897cca4700d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="点击preferences进行个性化设置"></li>
+<li>得到解压包以后，把解压的文件放在<code>assets</code>文件夹中，此文件夹会被打包编译，</li>
+<li>解决样式冲突问题：<ul>
+<li>由于项目引入了其他ui框架，本身有字体图标，会与自定义图标冲突，需要解决</li>
+<li>编写–style.scss文件</li>
+</ul>
+</li>
+</ol>
+<pre><code>//TODO: 解决字体图标库与框架的字体图标库的冲突问题
+//以&quot;icon-mt-&quot;打头，包含&quot; icon-mt-&quot;的，css3选择器
+i[class^=&quot;icon-mt-&quot;],i[class*=&quot; icon-mt-&quot;] {
+  font-family: &#39;#{$icomoon-font-family}&#39; !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+</code></pre><ol start="8">
+<li>如果想添加样式直接在–style.scss文件添加</li>
+</ol>
+<pre><code>.icon-mt-hezuo {
+  &amp;:before {
+    content: $icon-mt-hezuo;     
+    color: $icon-mt-color;
+  }
+}
+//默认没有状态样式，自定义添加
+.icon-mt-hezuo:active {
+  &amp;:before {
+    content: $icon-mt-hezuo;     
+    color: red;
+  }
+}
+</code></pre>
             </div>
             <hr>
 
