@@ -5,10 +5,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="仿美团项目笔记, 张雨凡">
-    <meta name="description" content=" 在学习仿美团项目时，对于vue结构、组件拆分布局，路由结构划分、提取公共的url接口上又有了新的收获，进行一些总结
-一、技术选型&amp;quot;axios&amp;quot;: &amp;quot;^0.18.0&amp;quot;,
-&amp;quot;muse-ui&amp;q">
+    <meta name="keywords" content="&#39;easy-mock本地部署过程&#39;, 张雨凡">
+    <meta name="description" content="背景： easy-mock 是常用的mock数据网站， 但是随着用户越来越多，easy-mock的接口响应速度有点时候会很慢(也跟本地网络环境有关)，而且接口也不稳定，时不时就挂了。。。
+需求：  公司里有一台专门搭建内网服务器的机子，供开">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +15,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>仿美团项目笔记 | 张雨凡</title>
+    <title>&#39;easy-mock本地部署过程&#39; | 张雨凡</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -272,13 +271,13 @@
 
 
 
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        仿美团项目笔记
+                        &#39;easy-mock本地部署过程&#39;
                     </div>
                 </div>
             </div>
@@ -298,8 +297,8 @@
             
             <div class="article-tag">
                 
-                <a href="/tags/vue/" target="_blank">
-                    <span class="chip bg-color">vue</span>
+                <a href="/tags/mock/" target="_blank">
+                    <span class="chip bg-color">mock</span>
                 </a>
                 
             </div>
@@ -310,15 +309,15 @@
                 <!--<span class="post-cate" style="margin-right: 0px">-->
                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                     
-                    <a href="/categories/vue项目/" class="post-category" target="_blank">
-                        vue项目
+                    <a href="/categories/模拟数据/" class="post-category" target="_blank">
+                        模拟数据
                     </a>
                     
                 </span>
                 
 
                 <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2019-03-11
+                    <i class="fa fa-clock-o fa-fw"></i>2019-03-13
                 </span>
 				
 				
@@ -330,405 +329,97 @@
         <hr>
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p> 在学习仿美团项目时，对于vue结构、组件拆分布局，路由结构划分、提取公共的url接口上又有了新的收获，进行一些总结</p>
-<h2 id="一、技术选型"><a href="#一、技术选型" class="headerlink" title="一、技术选型"></a>一、技术选型</h2><pre><code>&quot;axios&quot;: &quot;^0.18.0&quot;,
-&quot;muse-ui&quot;: &quot;^3.0.2&quot;,   //按需引用
-&quot;node-sass&quot;: &quot;^4.11.0&quot;,
-&quot;vant&quot;: &quot;^1.6.7&quot;,    //全局使用
-&quot;vue&quot;: &quot;^2.5.2&quot;,
-&quot;vue-router&quot;: &quot;^3.0.1&quot;,
-&quot;vuex&quot;: &quot;^3.1.0&quot;,
-&quot;less&quot;: &quot;^3.9.0&quot;,
-&quot;less-loader&quot;: &quot;^4.1.0&quot;,
-</code></pre><p>  <a href="https://github.com/ynzy/vue-project/tree/master/imitate-meituan" target="_blank" rel="noopener">项目地址</a></p>
-<h2 id="二、src的项目结构"><a href="#二、src的项目结构" class="headerlink" title="二、src的项目结构"></a>二、src的项目结构</h2><pre><code>|--src
-|  |-- api //存放公共的url和封装axios获取数据方法
-|  |-- components  //存放公共的组件
-|  |-- pages  //存放单个组件的页面
-|  |-- Museui.js  //按需引入museui的组件
-|  |-- store.js   //进行数据管理
-</code></pre><h2 id="三、vant和muse-ui的引入"><a href="#三、vant和muse-ui的引入" class="headerlink" title="三、vant和muse-ui的引入"></a>三、vant和muse-ui的引入</h2><h4 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h4><h5 id="1、全局引入vant"><a href="#1、全局引入vant" class="headerlink" title="1、全局引入vant"></a>1、全局引入vant</h5><pre><code>import Vant from &#39;vant&#39;;
-import &#39;vant/lib/index.css&#39;;
-Vue.use(Vant);
-</code></pre><h5 id="2、按需引入muse-ui"><a href="#2、按需引入muse-ui" class="headerlink" title="2、按需引入muse-ui"></a>2、按需引入muse-ui</h5><pre><code>
-import Vue from &#39;vue&#39;;
-import &#39;muse-ui/lib/styles/base.less&#39;;
-import {
-  AppBar,
-  Avatar,
-  Badge,
-  BottomNav,
-  Button,
-  TextField,
-  theme
-} from &#39;muse-ui&#39;;
-import &#39;muse-ui/lib/styles/theme.less&#39;;
-
-Vue.use(Icon);
-Vue.use(Button);
-Vue.use(AppBar);
-Vue.use(BottomNav);
-Vue.use(Paper);
-Vue.use(TextField);
-Vue.use(Badge);
-Vue.use(Avatar);
-Vue.use(theme);
-//自定义主题
-theme.add(&#39;teal&#39;, {
-  primary: &#39;#009688&#39;,
-  secondary: &#39;#ff4081&#39;,
-  success: &#39;#4caf50&#39;,
-  warning: &#39;#ffeb3b&#39;,
-}, &#39;light&#39;);
-
-theme.use(&#39;teal&#39;);
-</code></pre><h2 id="四、tabbar组件实现及路由跳转实现"><a href="#四、tabbar组件实现及路由跳转实现" class="headerlink" title="四、tabbar组件实现及路由跳转实现"></a>四、tabbar组件实现及路由跳转实现</h2><ol>
-<li>底部导航菜单栏使用muse-ui的tabbar组件，菜单页面路由通过Main.vue在底部菜单之上实现。</li>
+                <h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h3><p> easy-mock 是常用的mock数据网站， 但是随着用户越来越多，easy-mock的接口响应速度有点时候会很慢(也跟本地网络环境有关)，而且接口也不稳定，时不时就挂了。。。</p>
+<h3 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h3><p>  公司里有一台专门搭建内网服务器的机子，供开发者使用，所以想把easy-mock部署到本地，这样接口的稳定性和响应速度得到了保证，而且对团队开发也很有帮助。</p>
+<h3 id="实施："><a href="#实施：" class="headerlink" title="实施："></a>实施：</h3><p>首先先看easy-mock本地部署的官方介绍，<a href="https://github.com/easy-mock/easy-mock/blob/dev/README.zh-CN.md" target="_blank" rel="noopener">https://github.com/easy-mock/easy-mock/blob/dev/README.zh-CN.md</a>.官网介绍的步骤，大致分为以下几步：</p>
+<ol>
+<li>安装 node（&gt;=v8.9） &amp; MongoDB（&gt;=v3.4） &amp; Redis（&gt;=v4.0）</li>
+<li>安装 easy-mock，更改配置文件</li>
+<li>启动 easy-mock，测试项目是否可以正常启动，能的话就可以先 Ctrl + C了</li>
+<li>启动 MongoDB 和 Redis</li>
+<li>npm run build，然后用 PM2 启动 app.js</li>
 </ol>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;router-view/&gt;
-    &lt;mu-paper class=&quot;g-footer&quot;&gt;
-      &lt;mu-bottom-nav :value=&quot;bottomNav&quot;&gt;
-        &lt;mu-bottom-nav-item to=&quot;/home&quot; value=&quot;/home&quot; title=&quot;首页&quot; icon=&quot;home&quot;&gt;&lt;/mu-bottom-nav-item&gt;
-        &lt;mu-bottom-nav-item to=&quot;/recent&quot; value=&quot;/recent&quot; title=&quot;附近&quot; icon=&quot;pin_drop&quot;&gt;&lt;/mu-bottom-nav-item&gt;
-        &lt;mu-bottom-nav-item to=&quot;/guang&quot; value=&quot;/guang&quot; title=&quot;逛一逛&quot; icon=&quot;language&quot;&gt;&lt;/mu-bottom-nav-item&gt;
-        &lt;mu-bottom-nav-item to=&quot;/order&quot; value=&quot;/order&quot; title=&quot;订单&quot; icon=&quot;assignment&quot;&gt;&lt;/mu-bottom-nav-item&gt;
-        &lt;mu-bottom-nav-item to=&quot;/me&quot; value=&quot;/me&quot; title=&quot;我的&quot; icon=&quot;account_circle&quot;&gt;&lt;/mu-bottom-nav-item&gt;
-      &lt;/mu-bottom-nav&gt;
-    &lt;/mu-paper&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default {
-  data() {
-    return {
-      bottomNav: &quot;/home&quot;
-    };
-  },
-  methods: {},
-  mounted() {
-    //当每次重新挂载(重新刷新)时，重新匹配路由，使导航和路由路径相匹配
-    // console.log(this.$route.path);
-    let path = this.$route.path;
-    if(path==&quot;/&quot;)path=&quot;/home&quot;;
-    this.bottomNav = path;
-  }
-};
-&lt;/script&gt;
-&lt;style lang=&quot;less&quot; &gt;
-//TODO:由于museui字体图标无法显示，直接引入cdn库
-@import &quot;http://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.css&quot;;
-
-.g-footer {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-.mu-bottom-item {
-  min-width: 0.62rem;
-}
-&lt;/style&gt;
-</code></pre><ol start="2">
-<li>页面路由结构</li>
-</ol>
-<pre><code>routes: [
-    {
-      path: &#39;/&#39;,
-      component: Main,
-      children: [  //TODO: 设置子路由
-        {
-          path: &#39;&#39;,  //设置空路由，父级匹配一个子路由
-          name: &#39;main&#39;,
-          component: Home
-        },
-        {
-          path: &#39;/home&#39;,
-          name: &#39;home&#39;,
-          component: Home
-        },
-        {
-          path: &#39;/recent&#39;,
-          name: &#39;recent&#39;,
-          component: Recent
-        },
-        {
-          path: &#39;/guang&#39;,
-          name: &#39;guang&#39;,
-          component: Guang
-        },
-        {
-          path: &#39;/order&#39;,
-          name: &#39;order&#39;,
-          component: Order
-        },
-        {
-          path: &#39;/me&#39;,
-          name: &#39;me&#39;,
-          component: Me
-        }
-      ]
-    },
-    {
-      path: &#39;/meishi&#39;,  //单页面路由，不匹配在tabbar上
-      name: &#39;meishi&#39;,
-      component: MeShi
-    }
-  ]
+<h4 id="1-先装node"><a href="#1-先装node" class="headerlink" title="1.先装node"></a>1.先装node</h4><p>这一步不多讲了，之前有一篇<a href="https://ynzy.github.io/2019/02/10/nvm%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E5%92%8Cnrm%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%AE%A1%E7%90%86/">nvm版本管理和nrm下载源管理</a>讲到了如何安装管理node版本和npm下载源。我用的是8.15.0，已经放到公司服务器上，</p>
+<h4 id="2-安装MongoDB"><a href="#2-安装MongoDB" class="headerlink" title="2.安装MongoDB"></a>2.安装MongoDB</h4><ul>
+<li>安装包: 百度链接：<a href="https://pan.baidu.com/s/1M7HhtTRW8fE1Oknb0o4TgA" target="_blank" rel="noopener">https://pan.baidu.com/s/1M7HhtTRW8fE1Oknb0o4TgA</a>  提取码：kz8x </li>
+<li><a href="http://baijiahao.baidu.com/s?id=1601512248926547477&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">win版MongoDB安装教程</a></li>
+<li>MongoDB配置环境变量里面写的不清楚，我在这里重写下，</li>
+</ul>
+<pre><code>MONGO_HOME = C:\Program Files\MongoDB\Server\3.4\bin
+Path = %MONGO_HOME%
 </code></pre><ul>
-<li>由于页面刷新时，底部菜单索引自动匹配第一个路由页面，导致页面与底部菜单活跃状态不符，所以页面重新挂载时，获取此时路由的值，重新给底部菜单活跃项赋值。</li>
+<li>推荐使用可视化工具管理数据库，清晰明了，我现找了一个，全是英文看不懂，但也能凑活用了，如果有更好的希望推荐下。</li>
+<li>教程网址<a href="https://www.jianshu.com/p/1194de9859d0" target="_blank" rel="noopener">Robo 3T,mongoDB可视化工具</a></li>
 </ul>
-<h2 id="五、页面拆分成组件"><a href="#五、页面拆分成组件" class="headerlink" title="五、页面拆分成组件"></a>五、页面拆分成组件</h2><ul>
-<li>所有的页面中一部分都拆分成单个组件去进行渲染</li>
-<li>示例：</li>
+<h4 id="3-安装redis"><a href="#3-安装redis" class="headerlink" title="3.安装redis"></a>3.安装redis</h4><ul>
+<li>可以直接从<a href="https://redis.io/download" target="_blank" rel="noopener">https://redis.io/download</a>下载安装包,解压到根目录下面的 opt 文件夹下， 可以根据自己的需求改动 redis.conf 文件，然后输入命令 redis-server，就可以正常启动 redis 了。上面的百度链接里面也有压缩包。</li>
 </ul>
-<h2 id="六、api接口的封装"><a href="#六、api接口的封装" class="headerlink" title="六、api接口的封装"></a>六、api接口的封装</h2><ol>
-<li>–api–config.js,存放公共的url地址</li>
-</ol>
-<pre><code>var url = &quot; https://www.easy-mock.com/mock/5c7d08e7b7a08d1246bef9ff/api/&quot;
-export {url};
-</code></pre><ol start="2">
-<li>—api–shop.js,存放获取商品列表的axios方法</li>
-</ol>
-<pre><code>import axios from &#39;axios&#39;
-import { url } from &#39;./config&#39;
-let getShopList = (page) =&gt; {
-  return axios({
-    method: &quot;post&quot;,
-    url: url + &quot;shopList&quot;,
-    data: {
-      page: page,
-      pageSize: 10
+<h4 id="4-安装easy-mock"><a href="#4-安装easy-mock" class="headerlink" title="4.安装easy-mock"></a>4.安装easy-mock</h4><ul>
+<li>最后要安装的就是 easy-mock，git clone 下来，然后 npm install，安装依赖，npm run dev启动项目，config/default.json 可以自定义的配置，当然不配置倒也没关系，easy-mock会自动使用 MongoDB 和 redis，不需要其他操作。easy-mock 会默认启动在 7300 下面，打开服务器的ip+port，查看 easy-mock 是否正常启动，正常启动了说明安装阶段大功告成！</li>
+<li>自定义配置:在–config下创建local.json文件,</li>
+</ul>
+<pre><code>{
+  &quot;port&quot;: 7300, //easymock项目启动的端口
+  &quot;host&quot;: &quot;0.0.0.0&quot;,
+  &quot;pageSize&quot;: 30,
+  &quot;proxy&quot;: false,
+  &quot;db&quot;: &quot;mongodb://localhost/easy-mock&quot;, // 不需要自己新建数据库，在启动的easymock新建接口即可
+  &quot;unsplashClientId&quot;: &quot;&quot;,
+  &quot;redis&quot;: {
+    &quot;port&quot;: 6379, //redis端口
+    &quot;host&quot;: &quot;localhost&quot;
+  },
+  &quot;blackList&quot;: {
+    &quot;projects&quot;: [], // projectId，例：&quot;5a4495e16ef711102113e500&quot;
+    &quot;ips&quot;: [] // ip，例：&quot;127.0.0.1&quot;
+  },
+  &quot;rateLimit&quot;: { // https://github.com/koajs/ratelimit
+    &quot;max&quot;: 1000,
+    &quot;duration&quot;: 1000
+  },
+  &quot;jwt&quot;: {
+    &quot;expire&quot;: &quot;14 days&quot;,
+    &quot;secret&quot;: &quot;shared-secret&quot;
+  },
+  &quot;upload&quot;: {
+    &quot;types&quot;: [&quot;.jpg&quot;, &quot;.jpeg&quot;, &quot;.png&quot;, &quot;.gif&quot;, &quot;.json&quot;, &quot;.yml&quot;, &quot;.yaml&quot;],
+    &quot;size&quot;: 5242880,
+    &quot;dir&quot;: &quot;../public/upload&quot;,
+    &quot;expire&quot;: {
+      &quot;types&quot;: [&quot;.json&quot;, &quot;.yml&quot;, &quot;.yaml&quot;],
+      &quot;day&quot;: -1
     }
-  })
+  },
+  &quot;fe&quot;: {
+    &quot;copyright&quot;: &quot;&quot;,
+    &quot;storageNamespace&quot;: &quot;easy-mock_&quot;,
+    &quot;timeout&quot;: 25000,
+    &quot;publicPath&quot;: &quot;/dist/&quot;
+  }
 }
-export {
-  getShopList
-}
+</code></pre><h4 id="5-部署阶段："><a href="#5-部署阶段：" class="headerlink" title="5.部署阶段："></a>5.部署阶段：</h4><ol>
+<li>全局安装pm2</li>
+</ol>
+<pre><code>npm install pm2 -g 
+</code></pre><ol start="2">
+<li>编译easy-mock文件</li>
+</ol>
+<pre><code>npm run build
 </code></pre><ol start="3">
-<li>api接口的使用–pages–home-HomeShop.vue</li>
+<li>启动</li>
 </ol>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;van-list v-model=&quot;loading&quot; :finished=&quot;finished&quot; finished-text=&quot;没有更多了&quot; @load=&quot;onLoad&quot;&gt;
-      &lt;van-card v-for=&quot;(item,index) in list&quot; :key=&quot;index&quot;&gt;
-        &lt;div slot=&quot;title&quot;&gt;
-          &lt;strong&gt;{{item.desc}}&lt;/strong&gt;
-          &lt;div class=&quot;distance&quot;&gt;&lt; 500m&lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div slot=&quot;desc&quot;&gt;{{item.pos}}{{item.id}}&lt;/div&gt;
-        &lt;div slot=&quot;price&quot;&gt;
-          &lt;span&gt;￥{{item.price}}&lt;/span&gt;
-          &lt;van-tag size=&quot;medium&quot; type=&quot;danger&quot;&gt;劲爆&lt;/van-tag&gt;
-          &lt;div class=&quot;workoff&quot;&gt;已售{{item.sales}}&lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div slot=&quot;thumb&quot;&gt;
-          &lt;img :src=&quot;&#39;/static/shoplog/&#39;+ item.imgurl&quot; alt&gt;
-        &lt;/div&gt;
-      &lt;/van-card&gt;
-    &lt;/van-list&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-import { getShopList } from &quot;@/api/shop&quot;;  //引入获取商品列表分页数据的方法
-export default {
-  data() {
-    return {
-       list: [],
-      loading: false,
-      finished: false
-       page: 0
-    };
-  },
-  mounted() {},
-  methods: {
-    onLoad() {
-      this.page++
-
-      // 数据全部加载完成
-      setTimeout(() =&gt; {
-        getShopList(this.page)
-          .then(res =&gt; {
-            if (res.data.success) {
-              //遍历获取的数据添加到商品列表数组中进行渲染
-               res.data.shop.forEach(item =&gt; {
-                 this.list.push(item);
-               });
-
-              // 加载状态结束
-              this.loading = false;
-            }
-          })
-          .catch(function(err) {
-            alert(&quot;接口错误：&quot; + err);
-          });
-      }, 2000);
-      //如果获取数据长度超过了70,则不再获取数据
-      if (this.list.length &gt;= 70) {
-        this.finished = true;
-      }
-    }
-  }
-};
-&lt;/script&gt;
-
-&lt;style lang=&quot;less&quot; scoped&gt;
-.van-list {
-  //深度作用选择器: 如果你希望 scoped 样式中的一个选择器能够作用得“更深”，例如影响子组件，你可以使用 &gt;&gt;&gt; 操作符,使用预编译器则使用 &quot;/deep/ &quot;
-  /deep/ .van-card {   
-    background: #fff;
-  }
-}
-.van-card__price {
-  margin-top: 5px;
-  width: 100%;
-}
-.van-card__content {
-  strong {
-    font-size: 14px;
-  }
-}
-.distance {
-  float: right;
-  width: 0.6rem;
-  text-align: right;
-  font-weight: 500;
-  color: #000;
-}
-.workoff {
-  float: right;
-  width: 0.6rem;
-  text-align: right;
-  font-weight: 500;
-  color: #000;
-}
-&lt;/style&gt;
-</code></pre><h2 id="七、使用vuex管理数据"><a href="#七、使用vuex管理数据" class="headerlink" title="七、使用vuex管理数据"></a>七、使用vuex管理数据</h2><ul>
-<li>创建store.js对商品列表的分页数据进行管理</li>
-</ul>
-<pre><code>import Vue from &#39;vue&#39;
-import Vuex from &#39;vuex&#39;
-
-Vue.use(Vuex);
-
-var state = {
-  shop: {
-    num: 1,
-    list: [],
-    page: 0
-  }
-}
-
-const mutations = {
-  setshoplist(state, data) {  //设置商品列表数据
-    state.shop.list = state.shop.list.concat(data)  //拼接数组
-  },
-  nextpage(state){  //下一页
-    state.shop.page++;
-  }
-}
-
-export default new Vuex.Store({
-  state,
-  mutations
-})
-</code></pre><ul>
-<li>在HomeShop.vue页面使用vuex接收数据</li>
-</ul>
-<pre><code>&lt;script&gt; 
-import { mapState } from &quot;vuex&quot;;  //引入vuex数据mapState辅助函数
-import { getShopList } from &quot;@/api/shop&quot;;  //引入获取商品列表分页数据的方法
-
-export default {
-  data() {
-    return {
-      // list: [],
-      loading: false,
-      finished: false
-      // page: 0
-    };
-  },
-  computed: {
-    ...mapState({
-      list: state =&gt; state.shop.list,  //获取vuex中的list数据
-      page: state =&gt; state.shop.page   //获取vuex中的分页数据
-    })
-  },
-  mounted() {},
-  methods: {
-    onLoad() {
-      //每次加载刷新，页数加1
-      this.$store.commit(&quot;nextpage&quot;);  //提交页数突变的方法
-
-      // 数据全部加载完成
-      setTimeout(() =&gt; {
-        getShopList(this.page)
-          .then(res =&gt; {
-            if (res.data.success) {
-              this.$store.commit(&quot;setshoplist&quot;, res.data.shop);  //提交商品数据突变方法
-              // 加载状态结束
-              this.loading = false;
-            }
-          })
-          .catch(function(err) {
-            alert(&quot;接口错误：&quot; + err);
-          });
-      }, 2000);
-      //如果获取数据长度超过了70,则不再获取数据
-      if (this.list.length &gt;= 70) {
-        this.finished = true;
-      }
-    }
-  }
-};
-&lt;/script&gt;
-</code></pre><h2 id="八、制作svg图标，引入自定义图标"><a href="#八、制作svg图标，引入自定义图标" class="headerlink" title="八、制作svg图标，引入自定义图标"></a>八、制作svg图标，引入自定义图标</h2><ol>
-<li>使用Ai制作svg图标，保存为svg格式</li>
-<li>进入<a href="https://icomoon.io/" target="_blank" rel="noopener">制作字体图标官网</a></li>
-<li><img src="https://upload-images.jianshu.io/upload_images/13505073-9ef52fe4d4c425fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="导入svg图标"><br><img src="https://upload-images.jianshu.io/upload_images/13505073-3fad0e483ac4358d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="导入svg图标"></li>
-<li>也可以选择观望已有的图标，选择之后下方有显示，<br><img src="https://upload-images.jianshu.io/upload_images/13505073-dd2da770c8da4987.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
-<li>点击下方<em>Generate Font F</em>按钮对选择的图标进行设置，然后下载<br><img src="https://upload-images.jianshu.io/upload_images/13505073-74c8a897cca4700d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="点击preferences进行个性化设置"></li>
-<li>得到解压包以后，把解压的文件放在<code>assets</code>文件夹中，此文件夹会被打包编译，</li>
-<li>解决样式冲突问题：<ul>
-<li>由于项目引入了其他ui框架，本身有字体图标，会与自定义图标冲突，需要解决</li>
-<li>编写–style.scss文件</li>
-</ul>
-</li>
+<pre><code>pm2 start app.js -i 4
+</code></pre><ol start="4">
+<li>查看</li>
 </ol>
-<pre><code>//TODO: 解决字体图标库与框架的字体图标库的冲突问题
-//以&quot;icon-mt-&quot;打头，包含&quot; icon-mt-&quot;的，css3选择器
-i[class^=&quot;icon-mt-&quot;],i[class*=&quot; icon-mt-&quot;] {
-  font-family: &#39;#{$icomoon-font-family}&#39; !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-</code></pre><ol start="8">
-<li>如果想添加样式直接在–style.scss文件添加</li>
+<pre><code>pm2 list
+</code></pre><ol start="5">
+<li>访问ip+port</li>
 </ol>
-<pre><code>.icon-mt-hezuo {
-  &amp;:before {
-    content: $icon-mt-hezuo;     
-    color: $icon-mt-color;
-  }
-}
-//默认没有状态样式，自定义添加
-.icon-mt-hezuo:active {
-  &amp;:before {
-    content: $icon-mt-hezuo;     
-    color: red;
-  }
-}
-</code></pre>
+<pre><code>http://192.168.1.6:7300
+</code></pre><p>从此再也不用担心easy-mock官网不定时的崩掉了</p>
+<h4 id="参考网址"><a href="#参考网址" class="headerlink" title="参考网址"></a>参考网址</h4><p><a href="https://www.jianshu.com/p/1650c2b9eec9" target="_blank" rel="noopener">easy-mock 本地部署过程</a><br><a href="https://my.oschina.net/guol/blog/1531704" target="_blank" rel="noopener">Easy Mock部署使用</a><br><a href="http://www.cnblogs.com/lentoo/p/9539137.html" target="_blank" rel="noopener">使用pm2自动化部署node项目</a></p>
+
             </div>
             <hr>
 
@@ -866,7 +557,7 @@ i[class^=&quot;icon-mt-&quot;],i[class*=&quot; icon-mt-&quot;] {
                     <span class="reprint-tip">转载请注明: </span>
                     <a href="https://ynzy.github.io" class="b-link-green">张雨凡</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/03/11/仿美团项目笔记/" class="b-link-green">仿美团项目笔记</a>
+                    <a href="/2019/03/13/easy-mock本地部署过程/" class="b-link-green">&#39;easy-mock本地部署过程&#39;</a>
                 </p>
             </div>
         </div>
@@ -888,7 +579,7 @@ i[class^=&quot;icon-mt-&quot;],i[class*=&quot; icon-mt-&quot;] {
     <div class="row article-row">
         
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">上一篇</div>
+            <div class="article-badge left-badge text-color">本篇</div>
             <div class="card">
                 <a href="/2019/03/13/easy-mock本地部署过程/">
                     <div class="card-image">
@@ -903,9 +594,9 @@ i[class^=&quot;icon-mt-&quot;],i[class*=&quot; icon-mt-&quot;] {
                     <div class="summary">背景： easy-mock 是常用的mock数据网站， 但是随着用户越来越多，easy-mock的接口响应速度有点时候会很慢(也跟本地网络环境有关)，而且接口也不稳定，时不时就挂了。。。
 需求：  公司里有一台专门搭建内网服务器的机子，供开</div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -918,6 +609,7 @@ i[class^=&quot;icon-mt-&quot;],i[class*=&quot; icon-mt-&quot;] {
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -934,28 +626,29 @@ i[class^=&quot;icon-mt-&quot;],i[class*=&quot; icon-mt-&quot;] {
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">下一篇</div>
             <div class="card">
-                <a href="/2019/03/03/vue中数据交互和传参方式/">
+                <a href="/2019/03/11/仿美团项目笔记/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="vue中数据交互和传参方式">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="仿美团项目笔记">
                         
-                        <span class="card-title">vue中数据交互和传参方式</span>
+                        <span class="card-title">仿美团项目笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">
-一、介绍通过vue-music-app项目，初步熟悉vue中的数据交互和传参方式，此项目中使用到了vuex，vue-router，props，solt传参方式进行页面传参，以及如何设置代理服务器对访问的ip地址进行管理，并且使用到了van</div>
+                    <div class="summary"> 在学习仿美团项目时，对于vue结构、组件拆分布局，路由结构划分、提取公共的url接口上又有了新的收获，进行一些总结
+一、技术选型&quot;axios&quot;: &quot;^0.18.0&quot;,
+&quot;muse-ui&q</div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-03
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/脚手架/" class="post-category" target="_blank">
-                                    脚手架
+                            <a href="/categories/vue项目/" class="post-category" target="_blank">
+                                    vue项目
                                 </a>
                             
                             
@@ -965,8 +658,8 @@ i[class^=&quot;icon-mt-&quot;],i[class*=&quot; icon-mt-&quot;] {
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Vue-cli/" target="_blank">
-                        <span class="chip bg-color">Vue-cli</span>
+                    <a href="/tags/vue/" target="_blank">
+                        <span class="chip bg-color">vue</span>
                     </a>
                     
                 </div>
