@@ -6,7 +6,8 @@
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     <meta name="keywords" content="硅谷外卖day03, 张雨凡">
-    <meta name="description" content="day03一、完成登录注册功能
+    <meta name="description" content="项目地址
+一、完成登录注册功能
 2种登录方式
 手机号/验证码登录
 用户名/密码/图片验证码登录
@@ -341,7 +342,8 @@
         <hr>
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="day03"><a href="#day03" class="headerlink" title="day03"></a>day03</h1><h2 id="一、完成登录注册功能"><a href="#一、完成登录注册功能" class="headerlink" title="一、完成登录注册功能"></a>一、完成登录注册功能</h2><ol>
+                <p><a href="https://github.com/ynzy/vue-project/tree/master/gshop" target="_blank" rel="noopener">项目地址</a></p>
+<h2 id="一、完成登录注册功能"><a href="#一、完成登录注册功能" class="headerlink" title="一、完成登录注册功能"></a>一、完成登录注册功能</h2><ol>
 <li>2种登录方式<ul>
 <li>手机号/验证码登录</li>
 <li>用户名/密码/图片验证码登录</li>
@@ -546,11 +548,27 @@ Mock<span class="token punctuation">.</span><span class="token function">mock</s
 </li>
 </ul>
 </li>
-<li>初始化显示异常<ul>
+<li><p>初始化显示异常</p>
+<ul>
 <li>情况1：<code>Cannot read property &#39;xxx&#39; of undefined&quot;</code></li>
 <li>原因： 初始值是空对象, 内部没有数据, 而模块中直接显示3层表达式</li>
 <li><code>a.b.xxx</code>,undefined表示b未定义</li>
 <li>解决： 使用v-if指令</li>
+</ul>
+<pre class="line-numbers language-html"><code class="language-html"> <span class="token comment" spellcheck="true">&lt;!-- 使用v-if判断info是否加载了数据，控制是否显示，三级表达式会出现报错 --></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>shop-header-discounts<span class="token punctuation">"</span></span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>info.supports<span class="token punctuation">"</span></span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>toggleSupportShow<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>discounts-left<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>activity<span class="token punctuation">"</span></span> <span class="token attr-name">:class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>supportClasses[info.supports[0].type]<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>content-tag<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mini-tag<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>{{info.supports[0].name}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>activity-content ellipsis<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>{{info.supports[0].content}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>discounts-right<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>{{info.supports.length}} 个优惠<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li>情况2: <code>Cannot read property &#39;xxx&#39; of null&quot;</code></li>
 <li>原因： 数据定义时使用了<code>a=null</code></li>
 <li>解决： 直接使用<code>a=[]或a={}</code>定义空对象空数组</li>
@@ -718,36 +736,33 @@ Mock<span class="token punctuation">.</span><span class="token function">mock</s
     <div class="row article-row">
         
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">本篇</div>
+            <div class="article-badge left-badge text-color">上一篇</div>
             <div class="card">
-                <a href="/2019/03/25/硅谷外卖day03/">
+                <a href="/2019/04/02/硅谷外卖day04/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="硅谷外卖day03">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="硅谷外卖day04">
                         
-                        <span class="card-title">硅谷外卖day03</span>
+                        <span class="card-title">硅谷外卖day04</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">day03一、完成登录注册功能
-2种登录方式
-手机号/验证码登录
-用户名/密码/图片验证码登录
+                    <div class="summary">项目地址
+一、ShopGoods组件1、动态展现列表数据
+使用mock.js模拟商品数据，实现列表数据展现2、实现基本列表滑动
+使用better-scroll
 
 
-登录的基本流程
-表单前台验证，如果不通过，提示
-发送ajax请求，得到返回的结果
-
-
-根据结果的标识(code)来判断登录请求是否成功
-
-1</div>
+功能：
+实现两个列表滑动
+凸显当前分类
+当滑动右侧列表时，更新当前分类
+点击</div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-25
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-04-02
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -760,7 +775,6 @@ Mock<span class="token punctuation">.</span><span class="token function">mock</s
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -787,7 +801,8 @@ Mock<span class="token punctuation">.</span><span class="token function">mock</s
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">day02一、异步数据1、封装ajax：（第一天已写，这个很重要）
+                    <div class="summary">项目地址
+一、异步数据1、封装ajax：（第一天已写，这个很重要）
 要学会promise+axios封装ajax请求的函数
 要能封装每个接口对应的请求函数(根据接口定义ajax请求函数)
 解决ajax的跨域问题：配置代理，对代理的理解。
