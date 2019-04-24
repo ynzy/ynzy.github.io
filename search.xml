@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>vue项目如何部署在后台服务器上</title>
+      <link href="/2019/04/24/vue%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%E5%9C%A8%E5%90%8E%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A/"/>
+      <url>/2019/04/24/vue%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%E5%9C%A8%E5%90%8E%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A/</url>
+      
+        <content type="html"><![CDATA[<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><ul><li>vue项目打包后发给后台部署到后台服务器上，出现了很多问题，在此做一些总结</li><li>环境<ul><li>前台：build打包后的dist文件夹</li><li>后台：jetty服务器<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2></li></ul></li></ul><ol><li>后台问访问地址是什么</li></ol><ul><li>什么是访问地址<ul><li>一般访问地址构成：ip+端口号+项目名+html文件名(192.168.0.11:8080/projectName/index.html)</li></ul></li><li>一般服务器要放多个项目，不会在服务器根路径存放文件，所以会创建一个文件夹，对应项目名称</li><li>一般前台build打包之后的是没有配置访问地址的，那么默认的访问地址是后台服务器的本机地址,也就是服务器地址+端口号+静态根路径(项目名)+html名<br><img src="https://upload-images.jianshu.io/upload_images/13505073-08254b4229215281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="服务器文件路径"></li></ul><ol><li>dist文件部署之后无法正常访问</li></ol><ul><li>前端文件放到服务器之后出现无法找到资源文件的问题，开始认为是前台没有配置项目名称导致找不到资源，对前端配置做了更改<ul><li>vue2.0<code>config-index.js</code>中build配置项<code>assetsRoot</code>默认为打包文件到当前路径下的dist文件，修改为了</li></ul></li></ul><pre class="line-numbers language-js"><code class="language-js">index<span class="token punctuation">:</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'../dist/projectNmae/index.html'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token comment" spellcheck="true">// Paths</span>assetsRoot<span class="token punctuation">:</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'../projectNmae/dist'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>assetsSubDirectory<span class="token punctuation">:</span> <span class="token string">'static'</span><span class="token punctuation">,</span>assetsPublicPath<span class="token punctuation">:</span> <span class="token string">'./'</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><ul><li>build之后，文件统一放在了<code>dist/projectNmae</code>文件夹中，以为projectName就是项目文件名<ul><li>尝试之后并非如此，后台的jetty服务器有项目文件夹有一个对应的配置文件<br><img src="https://upload-images.jianshu.io/upload_images/13505073-72212abf74aec053.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目文件夹对应的配置文件.png"><pre class="line-numbers language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span><span class="token doctype">&lt;!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_3.dtd"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Configure</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.eclipse.jetty.webapp.WebAppContext<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token comment" spellcheck="true">&lt;!-- 这里对应的才是访问地址的项目名称 --></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Set</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>contextPath<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>/ProjectName<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Set</span><span class="token punctuation">></span></span><span class="token comment" spellcheck="true">&lt;!-- 这里配置项不清楚，但也配成了一样的 --></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Set</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>war<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>jetty.webapps<span class="token punctuation">"</span></span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>.<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>/ProjectName<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Set</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Configure</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li></ul></li></ul><ul><li>后台修改之后启动可以访问到，由于前台项目本身的一些缺陷，正常访问之后被莫名拦截了，未能正常跳转到login页面，所以在跳转login页面的路由上加上了项目名称，<code>window.location.href=&quot;project/#/login&quot;;</code></li><li>最后项目部署访问成功</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 项目部署 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Vue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>硅谷外卖day05</title>
       <link href="/2019/04/08/%E7%A1%85%E8%B0%B7%E5%A4%96%E5%8D%96day05/"/>
       <url>/2019/04/08/%E7%A1%85%E8%B0%B7%E5%A4%96%E5%8D%96day05/</url>
